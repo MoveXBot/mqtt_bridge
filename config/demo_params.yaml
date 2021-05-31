@@ -38,6 +38,6 @@ bridge:
     topic_to: /private/back
   # 自定义消息
   - factory: mqtt_bridge.bridge:RosToMqttBridge
-    msg_type: skyee_msg.msg:RealtimeStatus
+    msg_type: movexbot_msgs.msg:RealtimeStatus
     topic_from: /realtime_status
     topic_to: realtime_status
