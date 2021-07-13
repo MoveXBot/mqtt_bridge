@@ -1,0 +1,20 @@
+mqtt:
+  client:
+    protocol: 4      # MQTTv311
+  connection:
+    host: cloud.movexbot.com
+    port: 1883
+    keepalive: 60
+  private_path: /Robot/robotStat
+  # will:
+  #   topic: /Robot/robotStat/MX-SIMULATION-001
+  #   payload: 22222
+  #   qos: 0
+  #   retain: false
+serializer: json:dumps
+deserializer: json:loads
+bridge:
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: movexbot_msgs.msg:MqttTest
+    topic_from: /mqtt_test
+    topic_to: ~/$robot_id

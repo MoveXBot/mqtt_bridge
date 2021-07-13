@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from os import WIFSIGNALED
 import paho.mqtt.client as mqtt
 
 

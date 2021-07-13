@@ -53,7 +53,10 @@ def mqtt_bridge_node():
     # configure and connect to MQTT broker
     mqtt_client.on_connect = _on_connect
     mqtt_client.on_disconnect = _on_disconnect
-    mqtt_client.connect(**conn_params)
+    try:
+        mqtt_client.connect(**conn_params)
+    except:
+        print "MQTT connect failed"
 
     # configure bridges
     bridges = []

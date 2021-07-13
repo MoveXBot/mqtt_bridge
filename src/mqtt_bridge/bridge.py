@@ -6,6 +6,7 @@ from abc import ABCMeta, abstractmethod
 import inject
 import paho.mqtt.client as mqtt
 import rospy
+import os
 
 from .util import lookup_object, extract_values, populate_instance
 
@@ -59,6 +60,8 @@ class RosToMqttBridge(Bridge):
     """
 
     def __init__(self, topic_from, topic_to, msg_type, frequency=None):
+        if topic_to == "~/$robot_id":
+          topic_to = "~/" + os.getenv('ROBOT_ID')
         self._topic_from = topic_from
         self._topic_to = self._extract_private_path(topic_to)
         self._last_published = rospy.get_time()
@@ -74,7 +77,7 @@ class RosToMqttBridge(Bridge):
 
     def _publish(self, msg):
         payload = bytearray(self._serialize(extract_values(msg)))
-        self._mqtt_client.publish(topic=self._topic_to, payload=payload)
+        self._mqtt_client.publish(topic=self._topic_to, payload=payload, qos=1)
 
 
 class MqttToRosBridge(Bridge):
