@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from os import WIFSIGNALED
 import paho.mqtt.client as mqtt
-
+import os
 
 def default_mqtt_client_factory(params):
     u""" MQTT Client factory
@@ -11,6 +11,7 @@ def default_mqtt_client_factory(params):
     """
     # create client
     client_params = params.get('client', {})
+    client_params["client_id"] = os.getenv('ROBOT_ID')
     client = mqtt.Client(**client_params)
 
     # configure tls

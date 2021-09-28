@@ -9,6 +9,7 @@ from .bridge import create_bridge
 from .mqtt_client import create_private_path_extractor
 from .util import lookup_object
 
+topic_list=[]
 
 def create_config(mqtt_client, serializer, deserializer, mqtt_private_path):
     if isinstance(serializer, basestring):
@@ -62,6 +63,8 @@ def mqtt_bridge_node():
     bridges = []
     for bridge_args in bridge_params:
         bridges.append(create_bridge(**bridge_args))
+        if bridge_args["factory"] == "mqtt_bridge.bridge:MqttToRosBridge":
+            topic_list.append(bridges[-1]._topic_from)
 
     # start MQTT loop
     mqtt_client.loop_start()
@@ -74,7 +77,8 @@ def mqtt_bridge_node():
 
 def _on_connect(client, userdata, flags, response_code):
     rospy.loginfo('MQTT connected')
-
+    for topic in topic_list:
+        client.subscribe(topic, qos=1)
 
 def _on_disconnect(client, userdata, response_code):
     rospy.loginfo('MQTT disconnected')
