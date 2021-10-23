@@ -1,15 +1,18 @@
 mqtt:
   client:
     protocol: 4      # MQTTv311
+  account:
+    username: robot
+    password: robot123
   connection:
     host: cloud.movexbot.com
     port: 1883
     keepalive: 60
   private_path: /Robot/robotStat
   # will:
-  #   topic: /Robot/robotStat/MX-SIMULATION-001
-  #   payload: 22222
-  #   qos: 0
+  #   topic: /Robot/robotStat/$ROBOT_ID
+  #   payload: "{\"robot_state\": -1}"
+  #   qos: 1
   #   retain: false
 serializer: json:dumps
 deserializer: json:loads

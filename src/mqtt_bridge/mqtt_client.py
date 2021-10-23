@@ -12,6 +12,7 @@ def default_mqtt_client_factory(params):
     # create client
     client_params = params.get('client', {})
     client_params["client_id"] = os.getenv('ROBOT_ID')
+    # client_params["clean_session"] = False
     client = mqtt.Client(**client_params)
 
     # configure tls
@@ -47,6 +48,7 @@ def default_mqtt_client_factory(params):
     # configure will params
     will_params = params.get('will', {})
     if will_params:
+        will_params["topic"] = will_params["topic"].replace("$ROBOT_ID",os.getenv('ROBOT_ID'))
         client.will_set(**will_params)
 
     return client
