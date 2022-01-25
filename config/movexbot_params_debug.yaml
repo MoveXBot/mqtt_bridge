@@ -1,0 +1,28 @@
+mqtt:
+  client:
+    protocol: 4      # MQTTv311
+  account:
+    username: robot
+    password: robot123
+  connection:
+    host: 192.168.0.6
+    port: 1883
+    keepalive: 60
+  private_path: /Robot/robotStat
+  # will:
+  #   topic: /Robot/robotStat/$ROBOT_ID
+  #   payload: "{\"robot_state\": -1}"
+  #   qos: 1
+  #   retain: false
+serializer: json:dumps
+deserializer: json:loads
+bridge:
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: movexbot_msgs.msg:RealtimeStatus
+    topic_from: /robot_status/realtime_status
+    topic_to: ~/$ROBOT_ID
+    frequency: 1
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: std_msgs.msg:String
+    topic_from: /Robot/NewUpgradeVersion/$ROBOT_ID
+    topic_to: /new_upgrade_version
