@@ -55,6 +55,7 @@ def mqtt_bridge_node():
     mqtt_client.on_connect = _on_connect
     mqtt_client.on_disconnect = _on_disconnect
     mqtt_client.on_subscribe = _on_subscribe
+    # mqtt_client.on_log = _on_log
     try:
         mqtt_client.connect(**conn_params)
     except:
@@ -77,14 +78,17 @@ def mqtt_bridge_node():
 
 
 def _on_connect(client, userdata, flags, response_code):
-    rospy.loginfo('MQTT connected')
+    rospy.loginfo('MQTT connected: ' + str(response_code))
     for topic in topic_list:
         client.subscribe(topic, qos=1)
 
 def _on_disconnect(client, userdata, response_code):
-    rospy.loginfo('MQTT disconnected')
+    rospy.loginfo('MQTT disconnected: ' + str(response_code))
 
 def _on_subscribe(client, userdata, mid, granted_qos): 
     rospy.loginfo("subscribed: %s, granted_qos: %s" , mid, granted_qos)
+
+def _on_log(client, userdata, level, buf): 
+    rospy.loginfo("log_level: %d, buf: %s" , level, buf)
 
 __all__ = ['mqtt_bridge_node']

@@ -7,7 +7,7 @@ mqtt:
   connection:
     host: cloud.movexbot.com
     port: 1883
-    keepalive: 60
+    keepalive: 30
   private_path: /Robot/robotStat
   # will:
   #   topic: /Robot/robotStat/$ROBOT_ID
