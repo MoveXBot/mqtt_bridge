@@ -5,7 +5,7 @@ mqtt:
     username: robot
     password: robot123
   connection:
-    host: 192.168.0.6
+    host: test.movexbot.com
     port: 1883
     keepalive: 60
   private_path: /Robot/robotStat
@@ -22,7 +22,7 @@ bridge:
     topic_from: /robot_status/realtime_status
     topic_to: ~/$ROBOT_ID
     frequency: 1
-  - factory: mqtt_bridge.bridge:MqttToRosBridge
-    msg_type: std_msgs.msg:String
-    topic_from: /Robot/NewUpgradeVersion/$ROBOT_ID
-    topic_to: /new_upgrade_version
+  # - factory: mqtt_bridge.bridge:MqttToRosBridge
+  #   msg_type: std_msgs.msg:String
+  #   topic_from: /Robot/NewUpgradeVersion/$ROBOT_ID
+  #   topic_to: /new_upgrade_version
