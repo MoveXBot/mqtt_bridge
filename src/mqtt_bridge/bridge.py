@@ -10,6 +10,7 @@ import os
 
 from .util import lookup_object, extract_values, populate_instance
 
+robot_id = os.getenv('ROBOT_ID')
 
 def create_bridge(factory, msg_type, topic_from, topic_to, **kwargs):
     u""" bridge generator function
@@ -60,7 +61,7 @@ class RosToMqttBridge(Bridge):
     """
 
     def __init__(self, topic_from, topic_to, msg_type, frequency=None):
-        topic_to = topic_to.replace("$ROBOT_ID",os.getenv('ROBOT_ID'))
+        topic_to = topic_to.replace("$ROBOT_ID",robot_id)
         self._topic_from = topic_from
         self._topic_to = self._extract_private_path(topic_to)
         self._last_published = rospy.get_time()
@@ -70,7 +71,7 @@ class RosToMqttBridge(Bridge):
     def _callback_ros(self, msg):
         rospy.logdebug("ROS received from {}".format(self._topic_from))
         now = rospy.get_time()
-        if now - self._last_published >= self._interval:
+        if ((now - self._last_published >= self._interval) and (robot_id != "MX-NO-ID")):
             self._publish(msg)
             self._last_published = now
 
@@ -91,7 +92,7 @@ class MqttToRosBridge(Bridge):
 
     def __init__(self, topic_from, topic_to, msg_type, frequency=None,
                  queue_size=10):
-        topic_from = topic_from.replace("$ROBOT_ID",os.getenv('ROBOT_ID'))
+        topic_from = topic_from.replace("$ROBOT_ID",robot_id)
         self._topic_from = self._extract_private_path(topic_from)
         self._topic_to = topic_to
         self._msg_type = msg_type

@@ -26,3 +26,7 @@ bridge:
   #   msg_type: std_msgs.msg:String
   #   topic_from: /Robot/NewUpgradeVersion/$ROBOT_ID
   #   topic_to: /new_upgrade_version
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: std_msgs.msg:String
+    topic_from: /RobotCmd/$ROBOT_ID
+    topic_to: /remote_robot_cmd
