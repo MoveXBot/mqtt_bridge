@@ -1,7 +1,7 @@
 from typing import Dict, Callable
 
 import paho.mqtt.client as mqtt
-
+import os
 
 def default_mqtt_client_factory(params: Dict) -> mqtt.Client:
     """ MQTT Client factory """

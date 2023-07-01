@@ -56,7 +56,7 @@ def mqtt_bridge_node():
     try:
         mqtt_client.connect(**conn_params)
     except:
-        print "MQTT connect failed"
+        print("MQTT connect failed")
 
     # configure bridges
     bridges = []
