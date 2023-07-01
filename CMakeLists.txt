@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.0.2)
 project(mqtt_bridge)
 
 find_package(catkin REQUIRED)
@@ -18,5 +18,3 @@ install(DIRECTORY launch
 install(DIRECTORY config
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
-
-#add_custom_target(install_depends ALL COMMAND "pip" "install" "--user" "-r" "${PROJECT_SOURCE_DIR}/requirements.txt")
